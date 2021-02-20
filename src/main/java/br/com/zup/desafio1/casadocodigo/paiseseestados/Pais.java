@@ -1,6 +1,8 @@
 package br.com.zup.desafio1.casadocodigo.paiseseestados;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "paises")
@@ -11,6 +13,9 @@ public class Pais {
     private Long id;
     @Column(unique = true)
     private String nome;
+    @OneToMany(mappedBy = "pais")
+    private List<Estado> estados = new ArrayList<>();
+
 
     public Pais(String nome) {
         this.nome = nome;
@@ -34,5 +39,9 @@ public class Pais {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 '}';
+    }
+
+    public List<Estado> getEstados() {
+        return estados;
     }
 }

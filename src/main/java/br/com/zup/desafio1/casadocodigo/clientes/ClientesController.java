@@ -1,4 +1,4 @@
-package br.com.zup.desafio1.casadocodigo.categorias;
+package br.com.zup.desafio1.casadocodigo.clientes;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,18 +11,18 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaController {
+@RequestMapping("/clientes")
+public class ClientesController {
 
     @PersistenceContext
     private EntityManager em;
 
+
     @PostMapping
     @Transactional
-    public String cadastraCategoria(@RequestBody @Valid CategoriaForm form) {
-        Categoria categoria = form.converter();
-        em.persist(categoria);
-        return categoria.toString();
-
+    public String cadastraCliente(@Valid @RequestBody ClienteForm form) {
+        Cliente cliente = form.converter(em);
+        em.persist(cliente);
+        return cliente.getId().toString();
     }
 }

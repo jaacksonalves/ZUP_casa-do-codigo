@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/livro")
-public class LivroController {
+@RequestMapping("/livros")
+public class LivrosController {
 
     @PersistenceContext
     private EntityManager em;
