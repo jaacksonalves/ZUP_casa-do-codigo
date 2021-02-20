@@ -44,20 +44,6 @@ public class Cliente {
         this.cep = cep;
     }
 
-    public Cliente(String email, String nome, String sobrenome, String documento, String endereco, String complemento, String cidade,
-                   Pais pais, String telefone, String cep) {
-        this.email = email;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.documento = documento;
-        this.endereco = endereco;
-        this.complemento = complemento;
-        this.cidade = cidade;
-        this.pais = pais;
-        this.telefone = telefone;
-        this.cep = cep;
-    }
-
     public Cliente() {
     }
 

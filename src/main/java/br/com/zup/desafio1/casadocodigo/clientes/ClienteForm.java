@@ -62,16 +62,30 @@ public class ClienteForm {
 
 
     public Cliente converter(EntityManager em) {
-        List<Estado> estados = em.find(Pais.class, idPais).getEstados();
+        Pais pais = em.find(Pais.class, idPais);
+        Estado estado = null;
+        if (idEstado != null) {
+            estado = em.find(Estado.class, idEstado);
+        }
 
-        if (!estados.isEmpty() && idEstado != null) {
-            return new Cliente(email, nome, sobrenome, documento, endereco, complemento, cidade, em.find(Pais.class, idPais), em.find(Estado.class, idEstado), telefone, cep);
-        }
+        List<Estado> estados = pais.getEstados();
+
         if (estados.isEmpty() && idEstado == null) {
-            return new Cliente(email, nome, sobrenome, documento, endereco, complemento, cidade, em.find(Pais.class, idPais), telefone, cep);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reveja campos de País e Estado");
+            return new Cliente(email, nome, sobrenome, documento, endereco, complemento, cidade, pais,
+                    estado, telefone, cep);
         }
+        if (estados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Este País não possui Estados cadastrados");
+        }
+        if (idEstado == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Você precisa preencher um Estado para este País");
+        }
+        assert estado != null;
+        if (!pais.getId().equals(estado.getPais().getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Esse Estado não pertence a este País");
+        }
+        return new Cliente(email, nome, sobrenome, documento, endereco, complemento, cidade, pais,
+                estado, telefone, cep);
     }
 
 
